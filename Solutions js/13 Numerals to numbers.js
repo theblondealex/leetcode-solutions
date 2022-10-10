@@ -1,34 +1,39 @@
 var romanToInt = function(s) {
-    const splitarr = s.split("");
-    let numarr = [];
-    splitarr.forEach(function(el) {
-        switch (el) {
-            case "I":
-                numarr.push(1);
-                break;
-            case "V":
-                numarr.push(5);
-                break;
-            case "X":
-                numarr.push(10);
-                break;
-            case "L":
-                numarr.push(50);
-                break;
-            case "C":
-                numarr.push(100);
-                break;
-            case "D":
-                numarr.push(500);
-                break;
-            case "M":
-                numarr.push(1000);
-                break;
+    const numerals = {
+        I: 1,
+        V: 5,
+        X: 10,
+        L: 50,
+        C: 100,
+        D: 500,
+        M: 1000,
+    };
+    let total = 0;
+    for (let i = 0; i < s.length; i++) {
+        if (
+            numerals[s[i]] == 1 &&
+            (numerals[s[i + 1]] == 5 || numerals[s[i + 1]] == 10)
+        ) {
+            total += numerals[s[i + 1]] - numerals[s[i]];
+            i++;
+        } else if (
+            numerals[s[i]] == 10 &&
+            (numerals[s[i + 1]] == 50 || numerals[s[i + 1]] == 100)
+        ) {
+            total += numerals[s[i + 1]] - numerals[s[i]];
+            i++;
+        } else if (
+            numerals[s[i]] == 100 &&
+            (numerals[s[i + 1]] == 500 || numerals[s[i + 1]] == 1000)
+        ) {
+            total += numerals[s[i + 1]] - numerals[s[i]];
+            i++;
+        } else {
+            total += numerals[s[i]];
         }
-    });
-    const added = numarr.reduce((a, b) => a + b, 0);
-    console.log(added);
-    return added;
+    }
+    console.log(total);
+    return total;
 };
 
 romanToInt("III");
